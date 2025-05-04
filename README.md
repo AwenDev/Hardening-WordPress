@@ -13,3 +13,5 @@ A continuación se incluye un script en bash que automatiza varias de las medida
 ```bash
 # script-seguridad.sh
 # Comandos que se explican más abajo
+
+hh
