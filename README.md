@@ -1,17 +1,33 @@
 # Hardening-WordPress
 
-## Repositorio del proyecto
+## Descripción del proyecto
 
-URL del repositorio de GitHub: [enlace al repositorio](https://github.com/usuario/repositorio)
+Este documento técnico describe las acciones llevadas a cabo para aplicar medidas de hardening (refuerzo de seguridad) en una instalación de WordPress.  
+
+Se han implementado al menos 5 prácticas recomendadas, de acuerdo con la guía de seguridad de SiteGround.
 
 ---
 
-## ⚙️ Script de automatización (bash)
+## Acciones de seguridad implementadas
 
-A continuación se incluye un script en bash que automatiza varias de las medidas de seguridad aplicadas al sitio WordPress.
+### 1. Configurar las claves de seguridad de Wordpress (Keys y Salt)
 
-```bash
-# script-seguridad.sh
-# Comandos que se explican más abajo
+Primeramente tenemos que acudir a la siguiente página [generación de claves](https://api.wordpress.org/secret-key/1.1/salt/) En este enlace nos generará unas claves aleatorias.
 
-hh
+Una vez las tengamos vamos a sustituirlas por las que tenemos en el archivo **wp-config.php**. Para ello abrimos este archivo que lo tenemos en la raíz de nuestro proyecto.
+
+Vemos que actualmente tenemos estas claves:
+
+![antes del cambio](./img/1.png)
+
+Y tras generar las claves y sustituirlas, ahora nos aparecen las siguientes:
+
+![tras sustitución de claves](./img/2.png)
+
+Con esto se consigue que Cualquier sesión activa anterior se invalida y será necesario volver a iniciar sesión.
+
+---
+
+## Script de automatización
+
+Se incluye un script (`script.sh`) que automatiza las acciones anteriores.
