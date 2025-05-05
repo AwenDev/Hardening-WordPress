@@ -21,3 +21,14 @@ sed -i "/AUTH_KEY/,+7c\\
 $SALTS
 " "$WPCONFIG"
 
+
+# 2. Deshabilitar la edición de ficheros desde el panel de administración de WordPress
+
+if ! grep -q "DISALLOW_FILE_EDIT" "$WPCONFIG"; then
+
+    echo "Deshabilitando la edición de archivos desde el panel..."
+    sed -i "/\/\* That's all, stop editing! Happy publishing. \*\//i define('DISALLOW_FILE_EDIT', true);" "$WPCONFIG"
+    echo "Edición deshabilitada."
+else
+    echo "La constante está definida."
+fi

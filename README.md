@@ -28,6 +28,26 @@ Con esto se consigue que Cualquier sesión activa anterior se invalida y será n
 
 ---
 
+### 2. Deshabilitar la edición de ficheros desde el panel de administración de WordPress
+
+Si un atacante consigue acceso al panel, podría inyectar código malicioso directamente.
+
+Para esto hay que agregar una constante al archivo wp-config.php para desactivar esta funcionalidad.
+
+Abrimos el archivo wp-config.php y antes de dónde ponga: 
+
+'/*That's all, stop editing! Happy publishing.*/'
+
+añadimos la siguiente línea:
+
+'define('DISALLOW_FILE_EDIT', true);'
+
+Tal y como se muestra en la imagen
+
+![imagen](./img/3.png)
+
+---
+
 ## Script de automatización
 
-Se incluye un script (`script.sh`) que automatiza las acciones anteriores.
+Se incluye un [script](./script.sh) que automatiza las acciones anteriores.
