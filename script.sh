@@ -2,7 +2,7 @@
 
 # 1. Configurar las claves de seguridad de Wordpress (Keys y Salt)
 
-archivo="C:\xampp\htdocs\wordpress\wp-config.php"
+archivo="C:\xampp\htdocs\wordpress\wp-config.php" # esta ruta habría que sustituirla por la de linux, es la mía actualmente de windows
 
 
 # Comprobamos si existe
@@ -32,3 +32,28 @@ if ! grep -q "DISALLOW_FILE_EDIT" "$WPCONFIG"; then
 else
     echo "La constante está definida."
 fi
+
+# 3. Modificar los permisos de los archivos y directorios. Los archivos deben ponerse a 644 y los directorios a 755
+
+cd "C:\xampp\htdocs\wordpress\wp-config.php" # esta ruta habría que sustituirla por la de linux, es la mía actualmente de windows
+
+# Permisos de los archivos
+find . -type f -exec chmod 644 {} \;
+
+# Permisos de los directorios
+find . -type d -exec chmod 755 {} \;
+
+
+
+# 4. Bloquear la ejecución de código PHP en los siguientes directorios: wp-content/uploads, wp-content/plugins y wp-content/themes
+
+
+for dir in wp-content/uploads wp-content/plugins wp-content/themes; do
+  htaccess_file="$dir/.htaccess"
+
+  echo '<FilesMatch "\.php$">
+  Deny from all
+</FilesMatch>' > "$htaccess_file"
+
+  echo ".htaccess creado o sobrescrito en $dir"
+done

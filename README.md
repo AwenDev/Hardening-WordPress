@@ -4,7 +4,9 @@
 
 Este documento técnico describe las acciones llevadas a cabo para aplicar medidas de hardening (refuerzo de seguridad) en una instalación de WordPress.  
 
-Se han implementado al menos 5 prácticas recomendadas, de acuerdo con la guía de seguridad de SiteGround.
+Se han implementado 5 prácticas recomendadas.
+
+Indicar que el proyecto de wordpress realizado anteriormente fue sobre window con lo que la ejecución manual se hará sobre la máquina virtual windows ya creada con el proyecto y el script se adaptará para sistema linux tal y como indica el ejercicio.
 
 ---
 
@@ -48,6 +50,37 @@ Tal y como se muestra en la imagen
 
 ---
 
+### 3. Modificar los permisos de los archivos y directorios. Los archivos deben ponerse a 644 y los directorios a 755
+
+**644** → Archivos: el propietario puede leer y escribir; los demás solo pueden leer.
+
+**755** → Directorios: el propietario puede leer, escribir y ejecutar; los demás pueden leer y ejecutar.
+
+Indicamos en el script los comandos a utilizar esta modificación
+
+---
+
+### 4. Bloquear la ejecución de código PHP en los siguientes directorios: wp-content/uploads, wp-content/plugins y wp-content/themes
+
+Si un atacante logra subir un archivo .php, podría ejecutarlo y comprometer el sitio.
+
+Lo que vamos a hacer, primero de manera manual para ver qué es lo que hay que realizar, es que en cada uno de esos directorios crearemos un fichero .htaccess y en el meterermos las siguientes líneas
+
+´<FilesMatch "\.php$">
+  Deny from all
+</FilesMatch>´
+
+Así denegamos cualquier intento de ejecutar archivos .php
+
+![imagen](./img/5.png)
+
+Vemos el archivo creado en las tres ubicaciones
+
+![imagen](./img/6.png)
+---
+
 ## Script de automatización
+
+Indicar aquí que el script se realiza en bash, según especificaciones del ejercicio, pero los cambios en wordpress para especificar estas acciones de seguridad se hacen sobre windows ya que en su momento el ejercicio lo tenía realizado en una máquina virtual de windows.
 
 Se incluye un [script](./script.sh) que automatiza las acciones anteriores.
