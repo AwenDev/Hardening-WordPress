@@ -66,9 +66,11 @@ Si un atacante logra subir un archivo .php, podría ejecutarlo y comprometer el 
 
 Lo que vamos a hacer, primero de manera manual para ver qué es lo que hay que realizar, es que en cada uno de esos directorios crearemos un fichero .htaccess y en el meterermos las siguientes líneas
 
-´<FilesMatch "\.php$">
+```xml
+<FilesMatch "\.php$">
   Deny from all
-</FilesMatch>´
+</FilesMatch>
+```
 
 Así denegamos cualquier intento de ejecutar archivos .php
 
@@ -77,6 +79,24 @@ Así denegamos cualquier intento de ejecutar archivos .php
 Vemos el archivo creado en las tres ubicaciones
 
 ![imagen](./img/6.png)
+
+---
+
+### 5. Desactivar el acceso al archivo xmlrpc.php con reglas en un archivo .htaccess
+
+Con esta medida se mitigan ciertos ataques automatizados y abusos del sistema de XML-RPC en WordPress.
+
+En el directorio raíz de WordPress, buscamos el archivo .htaccess y lo abrimos. Añadiremos las siguientes líneas sl final:
+
+```xml
+<Files xmlrpc.php>
+    Order Deny,Allow
+    Deny from all
+</Files>
+```
+
+![imagen](./img/7.png)
+
 ---
 
 ## Script de automatización

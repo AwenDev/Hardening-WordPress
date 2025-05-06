@@ -2,7 +2,7 @@
 
 # 1. Configurar las claves de seguridad de Wordpress (Keys y Salt)
 
-archivo="C:\xampp\htdocs\wordpress\wp-config.php" # esta ruta habría que sustituirla por la de linux, es la mía actualmente de windows
+WPCONFIG="C:\xampp\htdocs\wordpress\wp-config.php" # esta ruta habría que sustituirla por la de linux, es la mía actualmente de windows
 
 
 # Comprobamos si existe
@@ -23,6 +23,8 @@ $SALTS
 
 
 # 2. Deshabilitar la edición de ficheros desde el panel de administración de WordPress
+
+WPCONFIG="C:\xampp\htdocs\wordpress\wp-config.php" # esta ruta habría que sustituirla por la de linux, es la mía actualmente de windows
 
 if ! grep -q "DISALLOW_FILE_EDIT" "$WPCONFIG"; then
 
@@ -49,11 +51,35 @@ find . -type d -exec chmod 755 {} \;
 
 
 for dir in wp-content/uploads wp-content/plugins wp-content/themes; do
-  htaccess_file="$dir/.htaccess"
+  archivo="$dir/.htaccess"
 
   echo '<FilesMatch "\.php$">
   Deny from all
-</FilesMatch>' > "$htaccess_file"
+</FilesMatch>' > "$archivo"
 
   echo ".htaccess creado o sobrescrito en $dir"
 done
+
+
+### 5. Desactivar el acceso al archivo xmlrpc.php con reglas en un archivo .htaccess
+
+archivo=".htaccess" # aquí se cambia por la ruta del archivo
+
+# Comprobamos si el archivo .htaccess ya existe
+if [ ! -f "$archivo" ]; then
+    touch "$archivo"
+fi
+
+# Se añaden reglas
+if ! grep -q "xmlrpc.php" "$archivo"; then
+    cat <<EOL >> "$archivo"
+
+<Files xmlrpc.php>
+    Order Deny,Allow
+    Deny from all
+</Files>
+EOL
+    echo "bloqueado correctamente."
+else
+    echo "Las reglas ya estaban aplicadas."
+fi
